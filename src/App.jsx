@@ -1,12 +1,15 @@
 import './App.css';
-import ItemListContainer from './components/ItemListContainer';
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import ItemDetailContainer from './components/ItemDetailContainer';
 import NavBar from './components/NavBar/'
+
 
 function App() {
   return (
     <>
-      <ItemListContainer texto='TecnoSoft'/>
       <NavBar />
+      <ItemDetailContainer />
     </>
   );
 }
