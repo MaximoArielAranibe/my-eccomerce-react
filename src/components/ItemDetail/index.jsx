@@ -14,6 +14,7 @@ export const ItemDetail = ({ data }) => {
         addProduct(data, quantity);
     }
 
+
     return(
         <div className="container">
             <div className="detail">
