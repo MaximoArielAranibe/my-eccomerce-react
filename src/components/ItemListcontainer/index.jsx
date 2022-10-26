@@ -1,37 +1,31 @@
-import Title from '../Title';
-import ItemList from '../ItemList';
 import React, {useEffect, useState} from 'react';
+import { getFirestore, collection, getDocs, query, where } from 'firebase/firestore';
+import ItemList from '../ItemList';
+import Title from '../Title';
 import { useParams } from 'react-router-dom';
 
-const films = [
-    { id: 1, image: "https://acroadtrip.blob.core.windows.net/catalogo-imagenes/m/RT_V_12aa5deef3794cc4ad0dfcd88426ef17.jpg" , title: "imagen1", category: "series"  },
-    { id: 2, image: "https://media.gq.com.mx/photos/6212a377b3938d1f596f9108/16:9/w_2560%2Cc_limit/ioniq5kvs_4.jpg" , title: "imagen2", category: "series"},
-    { id: 3, image: "https://http2.mlstatic.com/D_NQ_NP980813-MLA49352956352_032022-B.jpg" , title: "imagen3", category: "series" },
-];
-
-export const ItemListContainer = ({texto}) => {
+export const ItemListContainer = ({ texto }) => {
     const [data, setData] = useState([]);
 
     const { categoriaId } = useParams();
 
     useEffect(() => {
-        const getData = new Promise(resolve =>{ setTimeout(() => {
-                resolve(films);
-            }, 1000);
-        });
-
-        if (categoriaId){
-        getData.then(res => setData(res.filter(film => film.category === categoriaId)));
-    } else {
-        getData.then(res => setData(res));
-    }
-}, [categoriaId]);
+        const querydb = getFirestore();
+        const queryCollection = collection(querydb, 'products');
+        if(categoriaId){
+            const queryFilter = query(queryCollection, where('category', '==', categoriaId))
+            getDocs(queryFilter)
+            .then(res => setData(res.docs.map(product => ({ id: product.id, ...product.data() }))))
+        } else {
+            getDocs(queryCollection)
+                .then(res => setData(res.docs.map(product => ({ id: product.id, ...product.data() }))))
+        }
+    }, [categoriaId])
     
 
     return(
         <>
         <Title greeting={texto} />
-        
         <ItemList data={data} />
         </>
     );
