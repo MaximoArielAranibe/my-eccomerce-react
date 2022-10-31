@@ -8,10 +8,13 @@ const Item = ({info}) => {
     const { nombre } = useContext(CartContext);
 
     return(
-        <Link to={`/detalle/${info.id}`} className="film">
-            <p>{info.title}</p>
-            <img src={info.image} alt="" />
-        </Link>
+            <Link to={`/detalle/${info.id}`} className="film">
+                <div className='item-container'>            
+                    <p>{info.title}</p>
+                    <img src={info.image} alt="" />
+                    <p>{info.price}</p>
+                </div>
+            </Link>
     );
 }
 

@@ -1,6 +1,16 @@
-.film {
+.item-container{
     display: flex;
+    flex-flow: column;
+    background-color: red;
+    align-items: center;
+}
+
+.film {
     width: 300px;
+    margin: 1rem 0;
+    background-color: aqua;
+    display: flex;
+
 }
 
 .film img {
